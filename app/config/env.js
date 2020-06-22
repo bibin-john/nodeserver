@@ -1,6 +1,6 @@
 const env = {
     database: 'test',
-    username: 'admin',
+    username: 'postgres',
     password: '123',
     host: 'localhost',
     dialect: 'postgres',
