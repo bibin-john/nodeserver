@@ -9,7 +9,7 @@ router.get('/index', function(req, res) {
 });
 
 //file apis
-router.post('/file/upload', upload.single("file"), fileWorker.uploadFile);
+router.post('/file/upload', upload.single('file'), fileWorker.uploadFile);
  
 router.get('/file/info', fileWorker.listAllFiles);
  
