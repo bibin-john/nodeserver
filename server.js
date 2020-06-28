@@ -17,8 +17,12 @@ db.sequelize.sync({force: false}).then(() => {
   console.log('Drop and Resync with { force: true }');
 }); 
  
-let router = require('./app/routers/file.router.js');
-app.use('/', router);
+//Routing
+
+let appRouter = require('./app/routers/app.router.js');
+app.use('/apps', appRouter);
+let apiRouter = require('./app/routers/api.router.js');
+app.use('/apis', apiRouter);
  
 // Create a Server
 const server = app.listen(8080, function () {
