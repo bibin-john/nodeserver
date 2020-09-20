@@ -1,6 +1,13 @@
-const express = require('express');
-const app = express();
- 
+const express = require('express')
+const app = express()
+const port =  process.env.PORT || 8081
+
+// APP START
+app.listen(port, () => {
+  console.log(`Node Server listening at http://localhost:${port}`)
+});
+
+//CORS
 const cors = require('cors');
 const corsOptions = {
   origin: 'http://localhost:4200',
@@ -9,7 +16,8 @@ const corsOptions = {
 app.use(cors(corsOptions));
  
 global.__basedir = __dirname;
- 
+
+//DATABASE
 const db = require('./app/config/db.config.js');
   
 // force: true will drop the table if it already exists
@@ -17,18 +25,29 @@ db.sequelize.sync({force: false}).then(() => {
   console.log('Drop and Resync with { force: true }');
 }); 
  
-//Routing
+//ROUTING
 
 let appRouter = require('./app/routers/app.router.js');
 app.use('/apps', appRouter);
 let apiRouter = require('./app/routers/api.router.js');
 app.use('/apis', apiRouter);
- 
-// Create a Server
-const server = app.listen(8080, function () {
- 
-  let host = server.address().address;
-  let port = server.address().port;
- 
-  console.log('App listening at http://%s:%s', host, port); 
+
+
+//NOTIFICATION
+app.get('/notification', (req, res) => {
+  res.send('Notification msg 4')
+})
+
+
+// EXCEPTION HANDLING
+process.on('uncaughtException', (ex) => {
+    console.log('Process uncaughtException', ex);
 });
+
+process.on('SIGTERM', () => {
+  server.close(() => {
+    console.log('Process terminated');
+  })
+});
+
+//process.kill(process.pid, 'SIGTERM')

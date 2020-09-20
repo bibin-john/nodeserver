@@ -11,7 +11,7 @@ exports.uploadFile = (req, res) => {
   }).then(() => {
     res.json({msg:'File uploaded successfully! -> filename = ' + req.file.originalname});
   }).catch(err => {
-    console.log(err);
+    //console.log(err);
     res.json({msg: 'Error', detail: err});
   });
 };
@@ -20,7 +20,7 @@ exports.listAllFiles = (req, res) => {
   File.findAll({attributes: ['id', 'name']}).then(files => {
     res.json(files);
   }).catch(err => {
-    console.log(err);
+    //console.log(err);
     res.json({msg: 'Error', detail: err});
   });
 };
@@ -36,7 +36,7 @@ exports.downloadFile = (req, res) => {
  
     readStream.pipe(res);
   }).catch(err => {
-    console.log(err);
+    //console.log(err);
     res.json({msg: 'Error', detail: err});
   });
 };
